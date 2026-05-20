@@ -13,7 +13,28 @@ Future<void> addcontact(
   });
   ScaffoldMessenger.of(
     context,
-  ).showSnackBar(SnackBar(content: Text("ADDED SUCCESSFULLY!")));
+  ).showSnackBar(SnackBar(content: Text("ADDED SUCCESSFULLY")));
 }
 
+Stream<QuerySnapshot> getcontactdata() {
+  return FirebaseFirestore.instance.collection("contactdata").snapshots();
+}
 
+Future<void> updatecontact(
+  String id,
+  String name,
+  String number,
+  BuildContext context,
+) async {
+  await FirebaseFirestore.instance.collection("contactdata").doc(id).update({
+    "name": name,
+    "number": number,
+  });
+  ScaffoldMessenger.of(
+    context,
+  ).showSnackBar(SnackBar(content: Text("UPDATE SUCCESSFULLY")));
+}
+
+Future<void> deletecontact(String id, BuildContext context) async {
+  await FirebaseFirestore.instance.collection("contactdata").doc(id).delete();
+}
